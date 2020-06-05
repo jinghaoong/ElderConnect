@@ -1,0 +1,73 @@
+.base-body {
+    margin: 6.5em 2em 4.5em;
+}
+
+.base-body-auth {
+    margin-top: 4.5em;
+    padding: 0;
+}
+
+.auth-content {
+    height: auto;
+    margin: 0 33%;
+    padding: 1em;
+    border: 1px solid lightgray;
+}
+
+.auth-legend {
+    text-align: center;
+}
+
+.bg-footer-header {
+    background-color: #1A8DC2;
+    color: white;
+}
+
+.card-body {
+    background-color: #006E9E;
+    color: white;
+}
+
+.footer-list {
+    color: #1A8DC2;
+}
+
+.jumbotron-main, .logout {
+    text-align: center;
+}
+
+.motivation-header, .feature-overview-header {
+    padding-left: 0.5em;
+    padding-bottom: 0.25em;
+    font-size: 2em;
+}
+
+.nav-item {
+    font-size: 1.1em;
+}
+
+.navbar-brand {
+    font-size: 2em;
+}
+
+.register-success-alert {
+    margin: 0 33% 0.5em;
+}
+
+.sidebar {
+    padding: 0;
+}
+
+.bg-sidebar {
+    background-color: #ECEFF1;
+    font-size: 0.9em;
+}
+
+.border {
+    border-color: lightsteelblue;
+}
+
+.sidebar-item {
+    font-size: 1.1em;
+    color: black;
+}
