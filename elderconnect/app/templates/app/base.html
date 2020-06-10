@@ -34,19 +34,36 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+
                 <div class="collapse navbar-collapse" id="navbarToggle">
-
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'app-home' %}">
-                            Home</a>
-                        <a class="nav-item nav-link" href="{% url 'app-about' %}">
-                            About Us</a>
+                    <ul class="navbar-nav mr-auto">
+                        <li>
+                            <a class="nav-link" href="{% url 'app-home' %}">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'app-about' %}">About Us</a>
+                        </li>
                         {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'dashboard' %}">
-                            Dashboard</a>
-                        {% endif %}
-                    </div>
+                        <li>
+                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
 
+                        <!-- Dropdown Features -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Features
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'reminders' %}">Reminders</a>
+                            <a class="dropdown-item" href="#">Blood Pressure Records</a>
+                            <a class="dropdown-item" href="#">Integrated Calendar</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">History</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
 
                     <!-- Navbar Right Side -->
                     <div class="btn-group" role="group" aria-label="Login and Signup or Logout buttons">
@@ -73,23 +90,25 @@
 
     <!-- Main content -->
     <main role="main">
-        <div class="row">
-            <div class="col-md-12">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} register-success-alert">
-                    {{ message }}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} register-success-alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% block content %} {% endblock content %}
                 </div>
-                {% endfor %}
-                {% endif %}
-                {% block content %} {% endblock content %}
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-footer-header fixed-bottom justify-content-center">
+        <nav class="navbar navbar-expand-lg bg-footer-header bottom justify-content-center">
             <nav class="nav-item navbar-brand">Powered By :</nav>
             <div class="list-group list-group-horizontal footer-list">
                 <a class="list-group-item" href="https://getbootstrap.com/">Bootstrap</a>
@@ -100,6 +119,7 @@
     </footer>
 
     <!-- Optional JavaScript -->
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

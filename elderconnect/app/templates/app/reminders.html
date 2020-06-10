@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% block content %}
+    <div class="row reminders-page">
+
+        <!-- Sidebar -->
+        <div class="col-4 reminders-page-sidebar">
+            <button type="button" class="btn btn-secondary">
+                <a href="{% url 'reminder-create' %}">New Reminder</a>
+            </button>
+        </div>
+
+        <!-- Full Reminders List -->
+        <div class="col-8 reminders-page-list">
+            {% for reminder in reminders %}
+                <div class="card mt-4 mb-4 reminders-page-card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a class="reminder-card-title" href="{% url 'reminder-detail' reminder.id %}">{{ reminder.title }}</a>
+                        </h5>
+                        <p class="card-text">{{ reminder.description }}</p>
+                        <div class="btn-group">
+                            <a href="{% url 'reminder-update' reminder.id %}" class="btn btn-secondary">Update</a>
+                            <a href="{% url 'reminder-delete' reminder.id %}" class="btn btn-primary">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock content %}

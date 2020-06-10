@@ -1,10 +1,5 @@
 .base-body {
-    margin: 6.5em 2em 4.5em;
-}
-
-.base-body-auth {
-    margin-top: 4.5em;
-    padding: 0;
+    margin: 6.5em 0em 4.5em;
 }
 
 .auth-content {
@@ -27,6 +22,7 @@
     background-color: #006E9E;
     color: white;
 }
+
 
 .footer-list {
     color: #1A8DC2;
@@ -54,20 +50,23 @@
     margin: 0 33% 0.5em;
 }
 
-.sidebar {
-    padding: 0;
+.reminder-card-title {
+    color: white;
 }
 
-.bg-sidebar {
-    background-color: #ECEFF1;
-    font-size: 0.9em;
+.reminder-card-title:hover {
+    color: lightgrey;
 }
 
-.border {
-    border-color: lightsteelblue;
+.reminder-card-img {
+    height: 20em;
+    width: 100%;
 }
 
-.sidebar-item {
-    font-size: 1.1em;
-    color: black;
+.reminder-detail {
+    width: 30em;
+}
+
+.reminders-page-card {
+    width: 18rem;
 }
