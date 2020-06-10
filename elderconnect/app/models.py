@@ -26,13 +26,13 @@ class Reminder(models.Model):
 
         img = Image.open(self.medicine_image.path)
 
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
+        if img.height > 300 or img.width > 500:
+            output_size = (300, 500)
             img.thumbnail(output_size)
             img.save(self.medicine_image.path)
 
     def get_absolute_url(self):
-        return reverse('reminder-detail', kwargs={'pk': self.pk})
+        return reverse('reminders', kwargs={'pk': self.pk})
 
 
 class BloodPressure(models.Model):
@@ -48,4 +48,4 @@ class BloodPressure(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('bp-detail', kwargs={'pk': self.pk})
+        return reverse('bp', kwargs={'pk': self.pk})

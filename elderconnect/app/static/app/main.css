@@ -1,10 +1,14 @@
+main {
+    min-height: calc(100vh - 74px);
+}
+
 .base-body {
-    margin: 6.5em 0em 4.5em;
+    margin-top: 6.5em;
 }
 
 .auth-content {
     height: auto;
-    margin: 0 33%;
+    margin: 2em 33% 0;
     padding: 1em;
     border: 1px solid lightgray;
 }
@@ -13,12 +17,21 @@
     text-align: center;
 }
 
-.bg-footer-header {
+.bg-footer-header, .new-reminder {
     background-color: #1A8DC2;
     color: white;
 }
 
-.card-body {
+.new-reminder:hover {
+    background-color: white;
+    color: #1A8DC2;
+}
+
+.bg-reminder-card {
+    background-color: #006E9E;
+}
+
+.card, .reminder-card-body {
     background-color: #006E9E;
     color: white;
 }
@@ -50,7 +63,7 @@
     margin: 0 33% 0.5em;
 }
 
-.reminder-card-title {
+.reminder-card-title, .card-link-button, .new-reminder {
     color: white;
 }
 
@@ -59,14 +72,42 @@
 }
 
 .reminder-card-img {
-    height: 20em;
-    width: 100%;
+    width: 100%
 }
 
 .reminder-detail {
     width: 30em;
 }
 
-.reminders-page-card {
-    width: 18rem;
+.reminders-page{
+    padding: 0 20%;
+}
+
+.reminders-page-list {
+    padding: 1em;
+    background-color: #E9E9E9;
+}
+
+.site-footer {
+    height: 74px;
+    margin-top: 2em;
+}
+
+.card-link-button:hover {
+    background-color: white;
+    color: #1A8DC2;
+}
+
+.card-link-delete:hover {
+    background-color: white;
+    color: #B32F2F;
+}
+
+.reminder-img {
+    background-color: #E9E9E9;
+}
+
+.card-img-top {
+    max-width: 300px;
+    max-height: 500px;
 }

@@ -23,14 +23,11 @@ class ReminderListView(ListView):
     fields = ['title', 'date_current', 'time_1', 'time_2', 'time_3', 'time_4']
     template_name = 'app/reminders.html'
     context_object_name = 'reminders'
+    paginate_by = 2
     
     # Get user's list of reminders
     def get_queryset(self):
-        return Reminder.objects.filter(user=self.request.user).order_by('-date_current')
-
-
-class ReminderDetailView(DetailView):
-    model = Reminder
+        return Reminder.objects.filter(user=self.request.user).order_by('time_1')
 
 
 class ReminderCreateView(LoginRequiredMixin, CreateView):
@@ -71,3 +68,5 @@ class ReminderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 #BLOOD PRESSURE VIEWS
+
+
