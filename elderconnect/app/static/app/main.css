@@ -31,7 +31,7 @@ main {
     background-color: #006E9E;
 }
 
-.card, .reminder-card-body {
+.card {
     background-color: #006E9E;
     color: white;
 }
@@ -76,21 +76,21 @@ main {
 }
 
 .reminder-detail {
+    padding: 1em;
     width: 30em;
 }
 
-.reminders-page{
-    padding: 0 20%;
+.reminders-page {
+    margin-bottom: 2em;
 }
 
 .reminders-page-list {
-    padding: 1em;
+    padding: 2em;
     background-color: #E9E9E9;
 }
 
 .site-footer {
     height: 74px;
-    margin-top: 2em;
 }
 
 .card-link-button:hover {
@@ -103,11 +103,12 @@ main {
     color: #B32F2F;
 }
 
-.reminder-img {
-    background-color: #E9E9E9;
+
+.reminder-detail-timings {
+    color: black;
 }
 
-.card-img-top {
-    max-width: 300px;
-    max-height: 500px;
+.reminder-card-body {
+    background-color: white;
+    color: black;
 }
