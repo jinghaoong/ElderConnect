@@ -9,10 +9,16 @@
                 <p class="card-text">{{ object.description }}</p>
             </div>
             <ul class="list-group list-group-flush reminder-detail-timings">
-                <li class="list-group-item ">{{ object.time_1 }}</li>
-                <li class="list-group-item ">{{ object.time_2 }}</li>
-                <li class="list-group-item ">{{ object.time_3 }}</li>
-                <li class="list-group-item ">{{ object.time_4 }}</li>
+                <li class="list-group-item ">{{ object.time_1|time:'H:i' }}</li>
+                {% if object.time_2 %}
+                <li class="list-group-item ">{{ object.time_2|time:'H:i' }}</li>
+                {% endif %}
+                {% if object.time_3 %}
+                <li class="list-group-item ">{{ object.time_3|time:'H:i' }}</li>
+                {% endif %}
+                {% if object.time_4 %}
+                <li class="list-group-item ">{{ object.time_4|time:'H:i' }}</li>
+                {% endif %}
             </ul>
             <div class="card-body">
                 <div class="btn-group mr-4">
@@ -20,7 +26,7 @@
                     <a class="btn btn-primary" href="{% url 'reminder-delete' object.id %}" >Delete</a>
                 </div>
                 <div class="btn-group">
-                    <a class="btn btn-warning" href="{% url 'reminders' %}" class=>Back to Reminders</a>
+                    <a class="btn btn-warning" href="{% url 'reminders' %}">Back to Reminders</a>
                 </div>
             </div>
         </div>

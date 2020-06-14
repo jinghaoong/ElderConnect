@@ -3,7 +3,7 @@
 <div class="reminders-page">
 
     <div class="row container-fluid">
-        <div class="col-md-4 pl-4 mt-4">  
+        <div class="col-md-4 pl-4 mt-4 mb-4">  
             <h1>Medicine Reminders</h1>
             <a href="{% url 'reminder-create' %}" class="btn btn-lg btn-outline-primary new-reminder">New Reminder</a>
         </div>
@@ -28,10 +28,16 @@
                     <p class="card-text">{{ reminder.description }}</p>
                     <hr class="my-4"/>
                     <p class="card-text">
-                        Time 1: {{reminder.time_1 }} / Time 2: {{reminder.time_2 }}
-                    </p>
-                    <p class="card-text">
-                        Time 3: {{reminder.time_3 }} / Time 4: {{reminder.time_4 }}
+                        Time(s): {{ reminder.time_1|time:'H:i' }} 
+                        {% if reminder.time_2 %}
+                        / {{ reminder.time_2|time:'H:i' }}
+                        {% endif %}
+                        {% if reminder.time_3 %}
+                        / {{ reminder.time_3|time:'H:i' }} 
+                        {% endif %}
+                        {% if reminder.time_4 %}
+                        / Time 4: {{ reminder.time_4|time:'H:i' }}
+                        {% endif %}
                     </p>
                 </div>
             </div>

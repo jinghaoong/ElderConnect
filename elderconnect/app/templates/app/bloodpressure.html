@@ -3,7 +3,7 @@
 <div class="reminders-page">
 
     <div class="row container-fluid">
-        <div class="col-md-4 pl-4 mt-4">  
+        <div class="col-md-4 pl-4 mt-4 mb-4">  
             <h1>Blood Pressure Records</h1>
             <a href="{% url 'bp-create' %}" class="btn btn-lg btn-outline-primary new-reminder">New Reading</a>
         </div>
@@ -26,7 +26,7 @@
                         <a href="{% url 'bp-detail' bp.id %}">{{ bp.title }}</a>
                     </h5>
                     <p class="card-text">
-                        Date / Time
+                        {{ bp.date|date:'d-m-Y' }} ({{ bp.time|time:'H:i' }})
                     </p>
                 </div>
             </div>
