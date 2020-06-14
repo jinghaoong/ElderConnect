@@ -32,7 +32,7 @@ class Reminder(models.Model):
             img.save(self.medicine_image.path)
 
     def get_absolute_url(self):
-        return reverse('reminders', kwargs={'pk': self.pk})
+        return reverse('reminder-detail', kwargs={'pk': self.pk})
 
 
 class BloodPressure(models.Model):
@@ -48,4 +48,4 @@ class BloodPressure(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('bp', kwargs={'pk': self.pk})
+        return reverse('bp-detail', kwargs={'pk': self.pk})
