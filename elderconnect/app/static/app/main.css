@@ -17,14 +17,9 @@ main {
     text-align: center;
 }
 
-.bg-footer-header, .new-reminder {
+.bg-footer-header {
     background-color: #1A8DC2;
     color: white;
-}
-
-.new-reminder:hover {
-    background-color: white;
-    color: #1A8DC2;
 }
 
 .bg-reminder-card {

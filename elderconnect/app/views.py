@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    TemplateView
     )
 from .models import Reminder, BloodPressure
 
@@ -17,21 +19,37 @@ def about(request):
     return render(request, 'app/about.html', {'title': 'About Us'})
 
 
+@login_required
+def dashboard(request):
+    rem_qs = Reminder.objects.filter(user=request.user).order_by('date_current')[:5]
+    bp_qs = BloodPressure.objects.filter(user=request.user)
+    context = {'recent_reminders': rem_qs, 'bp_data': bp_qs}
+    return render(request, 'app/dashboard.html', context)
+
+
 #REMINDER VIEWS
-class ReminderListView(ListView):
+class ReminderListView(LoginRequiredMixin, ListView):
     model = Reminder
     fields = ['title', 'date_current', 'time_1', 'time_2', 'time_3', 'time_4']
     template_name = 'app/reminders.html'
     context_object_name = 'reminders'
     paginate_by = 5
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
     # Get user's list of reminders
     def get_queryset(self):
         return Reminder.objects.filter(user=self.request.user).order_by('time_1')
 
 
-class ReminderDetailView(DetailView):
+class ReminderDetailView(LoginRequiredMixin, DetailView):
     model = Reminder
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class ReminderCreateView(LoginRequiredMixin, CreateView):
@@ -72,20 +90,28 @@ class ReminderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 #BLOOD PRESSURE VIEWS
-class BPListView(ListView):
+class BPListView(LoginRequiredMixin, ListView):
     model = BloodPressure
     fields = ['title', 'date', 'time', 'systolic', 'diastolic']
     template_name = 'app/bloodpressure.html'
     context_object_name = 'bps'
     paginate_by = 5
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
     # Get user's list of blood pressure records
     def get_queryset(self):
         return BloodPressure.objects.filter(user=self.request.user).order_by('-date')
 
 
-class BPDetailView(DetailView):
+class BPDetailView(LoginRequiredMixin, DetailView):
     model = BloodPressure
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class BPCreateView(LoginRequiredMixin, CreateView):

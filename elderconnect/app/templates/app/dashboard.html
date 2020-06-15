@@ -1,11 +1,120 @@
 {% extends "app/base.html" %}
 {% block content %}
-    <div class="row">
-        <div class="col dashboard-feature border mr-3">
-            <h2>REMINDERS</h2>
+    <div class="row container-fluid">
+        <div class="col-md-3 mb-4">
+            <h2 class="mb-2">Dashboard</h2>
+            <div class="mb-4">
+                <a href="{% url 'reminder-create' %}" class="btn btn-md btn-outline-primary mr-2">New Reminder</a>
+                <a href="{% url 'bp-create' %}" class="btn btn-md btn-outline-primary">New Reading</a>
+            </div>
+            <ul class="list-group pr-4">
+                <a class="list-group-item active" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="list-group-item" href="{% url 'reminders' %}">Reminders</a>
+                <a class="list-group-item" href="{% url 'bp' %}">Blood Pressure Records</a>
+            </ul>
         </div>
-        <div class="col dashboard-feature border">
-            <h2>BLOOD PRESSURE</h2>
+        <div class="col-md-9">
+            <div class="row dashboard-feature border justify-content-center p-4">
+                <h2 class="mt-4 mr-4">Upcoming Reminders</h2>
+                {% if not recent_reminders %}
+                    <h3>No Reminders</h3>
+                    <p>Add reminders with the "New Reminders" button!</p>
+                {% else %}
+                    <div class="list-group text-center">
+                    {% for item in recent_reminders %}
+                        <a href="{% url 'reminder-detail' item.id %}" class="list-group-item list-group-item-action">
+                            {{ item.title }}
+                            <br>    
+                            Time(s): ( {{ item.time_1|time:"H:i" }}
+                            {% if item.time_2 %}
+                                / {{ item.time_2|time:"H:i" }}
+                            {% endif %}
+                            {% if item.time_3 %}
+                                / {{ item.time_3|time:"H:i" }}
+                            {% endif %}
+                            {% if item.time_4 %}
+                                / {{ item.time_4|time:"H:i" }}
+                            {% endif %}
+                            )
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row dashboard-feature border justify-content-center p-4">
+                <h2 class="pb-2">Blood Pressure Chart</h2>
+                <canvas id="bpChart" width="400" height="200"></canvas>
+                <script>
+                    var ctx = document.getElementById('bpChart');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [
+                                {% for item in bp_data %}
+                                    '{{ item.date|date:"d-m-Y" }} ({{ item.time|time:"H:i" }})',
+                                {% endfor %}
+                            ],
+                            datasets: [{
+                                label: 'Systolic',
+                                data: [
+                                    {% for item in bp_data %}
+                                        '{{ item.systolic }}',
+                                    {% endfor %}
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(14, 202, 128, 1)'
+                                ],
+                                borderWidth: 2,
+                                fill: false,
+                                pointStyle: 'rectRot',
+                                radius: 7,
+                                hoverRadius: 10,
+                            },
+                            {
+                                label: 'Diastolic',
+                                data: [
+                                    {% for item in bp_data %}
+                                        '{{ item.diastolic }}',
+                                    {% endfor %}
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(14, 137, 191, 1)'
+                                ],
+                                borderWidth: 2,
+                                fill: false,
+                                pointStyle: 'rectRot',
+                                radius: 7,
+                                hoverRadius: 10,
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: false
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
         </div>
     </div>
 {% endblock content %}

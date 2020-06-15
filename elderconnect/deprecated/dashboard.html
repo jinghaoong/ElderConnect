@@ -1,0 +1,27 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <div class="row container-fluid">
+        <div class="col-md-3 mb-4">
+            <h2 class="mb-2">Dashboard</h2>
+            <ul class="list-group pr-4">
+                <a class="list-group-item active" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="list-group-item" href="{% url 'reminders' %}">Reminders</a>
+                <a class="list-group-item" href="{% url 'bp' %}">Blood Pressure Records</a>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="row dashboard-feature border">
+                <h2>REMINDERS</h2>
+                {% block dashboard_reminders %}
+                    {% include "app/dashboard_reminders.html" %}
+                {% endblock dashboard_reminders %}
+            </div>
+            <div class="row dashboard-feature border">
+                <h2>BLOOD PRESSURE</h2>
+                {% block dashboard_bp %}
+                    {% include "app/dashboard_bp.html" %}
+                {% endblock dashboard_bp %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

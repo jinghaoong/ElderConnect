@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='app-home'),
     path('about/', views.about, name='app-about'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 
     path('reminders/', views.ReminderListView.as_view(), name='reminders'),
     path('reminders/<int:pk>/', views.ReminderDetailView.as_view(), name='reminder-detail'),

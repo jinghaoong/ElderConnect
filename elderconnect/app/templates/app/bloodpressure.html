@@ -3,12 +3,17 @@
 <div class="reminders-page">
 
     <div class="row container-fluid">
-        <div class="col-md-4 pl-4 mt-4 mb-4">  
-            <h1>Blood Pressure Records</h1>
-            <a href="{% url 'bp-create' %}" class="btn btn-lg btn-outline-primary new-reminder">New Reading</a>
+        <div class="col-md-3 mb-4">
+            <h2 class="mb-2">Blood Pressure Records</h2>
+            <a href="{% url 'bp-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reading</a>
+            <ul class="list-group mr-4 mb-4">
+                <a class="list-group-item" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="list-group-item" href="{% url 'reminders' %}">Reminders</a>
+                <a class="list-group-item active" href="{% url 'bp' %}">Blood Pressure Records</a>
+            </ul>
         </div>
 
-        <div class="col-md-8 reminders-page-list">
+        <div class="col-md-9 reminders-page-list">
         {% for bp in bps %}
             <div class="card mb-3 text-center">
                 <div class="card-header">
