@@ -13,6 +13,17 @@
             </ul>
         </div>
 
+        {% if not reminders %}
+            <div class="card-body reminder-card-body border border-secondary text-center">
+                <h3 class="card-title">
+                    No Reminders
+                </h3>
+                <hr>
+                <p class="card-text">
+                    Add reminders with the "New Reminder" button!
+                </p>
+            </div>
+        {% else %}
         <div class="col-md-9 reminders-page-list">
         {% for reminder in reminders %}
             <div class="card mb-3 text-center">
@@ -48,6 +59,7 @@
             </div>
         {% endfor %}
         </div>
+        {% endif %}
     </div>
 
     

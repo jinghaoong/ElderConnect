@@ -82,11 +82,11 @@
             <div class="row">
                 <div class="col">
                     {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} register-success-alert">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} register-success-alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
                     {% endif %}
                     {% block content %} {% endblock content %}
                 </div>
@@ -107,10 +107,7 @@
     </footer>
 
     <!-- Optional JavaScript -->
-
-    <!-- ChartJS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

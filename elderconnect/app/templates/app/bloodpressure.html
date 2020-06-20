@@ -13,6 +13,17 @@
             </ul>
         </div>
 
+        {% if not bps %}
+            <div class="card-body reminder-card-body border border-secondary text-center">
+                <h3 class="card-title">
+                    No Blood Pressure Readings
+                </h3>
+                <hr>
+                <p class="card-text">
+                    Add Blood Pressure Readings with the "New Reading" button!
+                </p>
+            </div>
+        {% else %}
         <div class="col-md-9 reminders-page-list">
         {% for bp in bps %}
             <div class="card mb-3 text-center">
@@ -30,13 +41,18 @@
                     <h5 class="card-title">
                         <a href="{% url 'bp-detail' bp.id %}">{{ bp.title }}</a>
                     </h5>
+                    <hr>
                     <p class="card-text">
-                        {{ bp.date|date:'d-m-Y' }} ({{ bp.time|time:'H:i' }})
+                        {{ bp.date|date:'d F Y' }} ({{ bp.time|time:'H:i' }})
+                    </p>
+                    <p class="card-text">
+                        Reading : {{ bp.systolic }} / {{ bp.diastolic }}
                     </p>
                 </div>
             </div>
         {% endfor %}
         </div>
+        {% endif %}
     </div>
 
     

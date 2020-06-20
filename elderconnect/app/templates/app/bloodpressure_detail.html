@@ -8,8 +8,9 @@
                 <p class="card-text">{{ object.comments }}</p>
             </div>
             <ul class="list-group list-group-flush reminder-detail-timings">
-                <li class="list-group-item ">{{ object.date }}</li>
-                <li class="list-group-item ">{{ object.time }}</li>
+                <li class="list-group-item">{{ object.date|date:"d F Y" }}</li>
+                <li class="list-group-item">{{ object.time|time:'H:i' }}</li>
+                <li class="list-group-item">Reading : {{ object.systolic}} / {{ object.diastolic }}
             </ul>
             <div class="card-body">
                 <div class="btn-group mr-4">
