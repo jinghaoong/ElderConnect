@@ -28,5 +28,19 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name="logout"),
 ]
 
+""" REST_FRAMEWORK URLS """
+""" 
+rest-auth: 
+POST -> /login , /logout , /password/(reset , reset/confirm, change)
+GET/PUT/PATCH -> /user
+
+rest-auth/registration
+rest-auth/registration/verify-email
+"""
+urlpatterns += [
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
