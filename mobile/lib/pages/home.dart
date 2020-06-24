@@ -8,48 +8,50 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final List<Tab> homeTabs = <Tab>[
-    Tab(icon: Icon(Icons.home)),
-    Tab(text: 'Login'),
-    Tab(text: 'Register'),
-  ];
-
-  TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: homeTabs.length);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('ElderConnect+'),
-        backgroundColor: Colors.cyan[800],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: homeTabs,
-          indicatorColor: Colors.white,
-        ),
+        backgroundColor: Colors.teal[800],
+        elevation: 20.0,
       ),
       body: Container(
-        padding: const EdgeInsets.all(15.0),
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            Center(child: Text('Home Page')),
-            Login(),
-            Register(),
-          ]
-        ),
+        padding: EdgeInsets.all(25.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ButtonTheme(
+                  height: 50.0,
+                  minWidth: 200.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (BuildContext context) => Login()),
+                              (route) => false);
+                    },
+                    child: Text("Login"),
+                    color: Colors.teal[600],
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                ButtonTheme(
+                  height: 50.0,
+                  minWidth: 200.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (BuildContext context) => Register()),
+                              (route) => false);
+                    },
+                    child: Text("Register"),
+                    color: Colors.teal[600],
+                  ),
+                ),
+              ],
+            )
+          )
       ),
     );
   }
