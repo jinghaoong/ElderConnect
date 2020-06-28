@@ -22,11 +22,11 @@
             </ul>
             <div class="card-body">
                 <div class="btn-group mr-4">
-                    <a class="btn btn-secondary" href="{% url 'reminder-update' object.id %}" >Update</a>
-                    <a class="btn btn-primary" href="{% url 'reminder-delete' object.id %}" >Delete</a>
+                    <a class="btn btn-secondary" href="{% url 'web-reminder-update' object.id %}" >Update</a>
+                    <a class="btn btn-primary" href="{% url 'web-reminder-delete' object.id %}" >Delete</a>
                 </div>
                 <div class="btn-group">
-                    <a class="btn btn-warning" href="{% url 'reminders' %}">Back to Reminders</a>
+                    <a class="btn btn-warning" href="{% url 'web-reminders' %}">Back to Reminders</a>
                 </div>
             </div>
         </div>

@@ -5,11 +5,11 @@
     <div class="row container-fluid">
         <div class="col-md-3 mb-4">
             <h2 class="mb-2">Medicine Reminders</h2>
-            <a href="{% url 'reminder-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reminder</a>
+            <a href="{% url 'web-reminder-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reminder</a>
             <ul class="list-group mr-4 mb-4">
                 <a class="list-group-item" href="{% url 'dashboard' %}">Dashboard</a>
-                <a class="list-group-item active" href="{% url 'reminders' %}">Reminders</a>
-                <a class="list-group-item" href="{% url 'bp' %}">Blood Pressure Records</a>
+                <a class="list-group-item active" href="{% url 'web-reminders' %}">Reminders</a>
+                <a class="list-group-item" href="{% url 'web-bp' %}">Blood Pressure Records</a>
             </ul>
         </div>
 
@@ -30,16 +30,16 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link card-link-button" href="{% url 'reminder-update' reminder.id %}">Update</a>
+                            <a class="nav-link card-link-button" href="{% url 'web-reminder-update' reminder.id %}">Update</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link card-link-button card-link-delete" href="{% url 'reminder-delete' reminder.id %}">Delete</a>
+                            <a class="nav-link card-link-button card-link-delete" href="{% url 'web-reminder-delete' reminder.id %}">Delete</a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body reminder-card-body">
                     <h5 class="card-title">
-                        <a href="{% url 'reminder-detail' reminder.id %}">{{ reminder.title }}</a>
+                        <a href="{% url 'web-reminder-detail' reminder.id %}">{{ reminder.title }}</a>
                     </h5>
                     <p class="card-text">{{ reminder.description }}</p>
                     <hr class="my-4"/>

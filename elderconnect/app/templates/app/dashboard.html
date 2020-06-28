@@ -4,13 +4,13 @@
         <div class="col-md-3 mb-4">
             <h2 class="mb-2">Dashboard</h2>
             <div class="mb-4">
-                <a href="{% url 'reminder-create' %}" class="btn btn-md btn-outline-primary mr-2">New Reminder</a>
-                <a href="{% url 'bp-create' %}" class="btn btn-md btn-outline-primary">New Reading</a>
+                <a href="{% url 'web-reminder-create' %}" class="btn btn-md btn-outline-primary mr-2">New Reminder</a>
+                <a href="{% url 'web-bp-create' %}" class="btn btn-md btn-outline-primary">New Reading</a>
             </div>
             <ul class="list-group pr-4">
                 <a class="list-group-item active" href="{% url 'dashboard' %}">Dashboard</a>
-                <a class="list-group-item" href="{% url 'reminders' %}">Reminders</a>
-                <a class="list-group-item" href="{% url 'bp' %}">Blood Pressure Records</a>
+                <a class="list-group-item" href="{% url 'web-reminders' %}">Reminders</a>
+                <a class="list-group-item" href="{% url 'web-bp' %}">Blood Pressure Records</a>
             </ul>
         </div>
         <div class="col-md-9">
@@ -28,7 +28,7 @@
                 {% else %}
                     <div class="list-group text-center">
                     {% for item in recent_reminders %}
-                        <a href="{% url 'reminder-detail' item.id %}" class="list-group-item list-group-item-action">
+                        <a href="{% url 'web-reminder-detail' item.id %}" class="list-group-item list-group-item-action">
                             {{ item.title }}
                             <br>    
                             Time(s): {{ item.time_1|time:"H:i" }}

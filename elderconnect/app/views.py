@@ -11,6 +11,7 @@ from django.views.generic import (
     )
 from .models import Reminder, BloodPressure
 
+
 def home(request):
     return render(request, 'app/home.html')
 

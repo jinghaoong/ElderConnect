@@ -5,11 +5,11 @@
     <div class="row container-fluid">
         <div class="col-md-3 mb-4">
             <h2 class="mb-2">Blood Pressure Records</h2>
-            <a href="{% url 'bp-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reading</a>
+            <a href="{% url 'web-bp-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reading</a>
             <ul class="list-group mr-4 mb-4">
                 <a class="list-group-item" href="{% url 'dashboard' %}">Dashboard</a>
-                <a class="list-group-item" href="{% url 'reminders' %}">Reminders</a>
-                <a class="list-group-item active" href="{% url 'bp' %}">Blood Pressure Records</a>
+                <a class="list-group-item" href="{% url 'web-reminders' %}">Reminders</a>
+                <a class="list-group-item active" href="{% url 'web-bp' %}">Blood Pressure Records</a>
             </ul>
         </div>
 
@@ -30,16 +30,16 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link card-link-button" href="{% url 'bp-update' bp.id %}">Update</a>
+                            <a class="nav-link card-link-button" href="{% url 'web-bp-update' bp.id %}">Update</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link card-link-button card-link-delete" href="{% url 'bp-delete' bp.id %}">Delete</a>
+                            <a class="nav-link card-link-button card-link-delete" href="{% url 'web-bp-delete' bp.id %}">Delete</a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body reminder-card-body">
                     <h5 class="card-title">
-                        <a href="{% url 'bp-detail' bp.id %}">{{ bp.title }}</a>
+                        <a href="{% url 'web-bp-detail' bp.id %}">{{ bp.title }}</a>
                     </h5>
                     <hr>
                     <p class="card-text">

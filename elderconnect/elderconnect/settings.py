@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     'app',
     'users',
+    'api',
 ]
 
 SITE_ID = 1
@@ -152,3 +153,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_EMAIL_REQUIRED = True
