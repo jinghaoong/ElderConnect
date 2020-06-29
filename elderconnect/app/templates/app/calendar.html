@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="reminders-page">
+
+    <div class="row container-fluid">
+        <div class="col-md-3 mb-4">
+            <h2 class="mb-2">Calendar</h2>
+            <div class="mb-4">
+                <a href="{% url 'web-reminder-create' %}" class="btn btn-md btn-outline-primary">New Reminder</a>
+                <a href="{% url 'web-bp-create' %}" class="btn btn-md btn-outline-primary">New Reading</a>
+            </div>
+            <ul class="list-group mr-4 mb-4">
+                <a class="list-group-item" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="list-group-item active" href="{% url 'calendar' %}">Calendar</a>
+                <a class="list-group-item" href="{% url 'web-reminders' %}">Reminders</a>
+                <a class="list-group-item" href="{% url 'web-bp' %}">Blood Pressure Records</a>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <div id='calendar'></div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  var calendarEl = document.getElementById('calendar');
+
+                  var calendar = new FullCalendar.Calendar(calendarEl, {
+                    timeZone: 'UTC',
+                    themeSystem: 'bootstrap',
+                    headerToolbar: {
+                      left: 'prev,next today',
+                      center: 'title',
+                      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    weekNumbers: true,
+                    dayMaxEvents: true, // allow "more" link when too many events
+                  });
+
+                  calendar.render();
+                });
+            </script>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

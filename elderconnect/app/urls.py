@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='app-home'),
     path('about/', views.about, name='app-about'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('calendar/', views.calendar, name='calendar'),
 
     path('reminders/', views.ReminderListView.as_view(), name='web-reminders'),
     path('reminders/<int:pk>/', views.ReminderDetailView.as_view(), name='web-reminder-detail'),

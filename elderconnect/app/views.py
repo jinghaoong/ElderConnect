@@ -28,6 +28,11 @@ def dashboard(request):
     return render(request, 'app/dashboard.html', context)
 
 
+@login_required
+def calendar(request):
+    return render(request, 'app/calendar.html')
+
+
 #REMINDER VIEWS
 class ReminderListView(LoginRequiredMixin, ListView):
     model = Reminder

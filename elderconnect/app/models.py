@@ -40,8 +40,8 @@ class BloodPressure(models.Model):
     comments = models.CharField(max_length=300)
     date = models.DateField(default=date.today)
     time = models.TimeField()
-    systolic = models.PositiveIntegerField(validators=[MaxValueValidator(300)])
-    diastolic = models.PositiveIntegerField(validators=[MaxValueValidator(250)])
+    systolic = models.PositiveIntegerField(validators=[MaxValueValidator(200)])
+    diastolic = models.PositiveIntegerField(validators=[MaxValueValidator(150)])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
