@@ -4,50 +4,55 @@
 
     <div class="row container-fluid">
         <div class="col-md-3 mb-4">
-            <h2 class="mb-2">Blood Pressure Records</h2>
-            <a href="{% url 'web-bp-create' %}" class="btn btn-md btn-outline-primary mb-4">New Reading</a>
+            <h2 class="mb-4">Archived Reminders</h2>
             <ul class="list-group mr-4 mb-4">
-                <a class="list-group-item" href="{% url 'dashboard' %}">Dashboard</a>
-                <a class="list-group-item" href="{% url 'calendar' %}">Calendar</a>
-                <a class="list-group-item" href="{% url 'web-reminders' %}">Reminders</a>
-                <a class="list-group-item active" href="{% url 'web-bp' %}">Blood Pressure Records</a>
+                <a class="list-group-item" href="{% url 'web-reminders' %}">Back to Reminders</a>
+                <hr>
+                <a class="list-group-item active" href="{% url 'web-reminders' %}">Reminders Archive</a>
             </ul>
         </div>
 
-        {% if not bps %}
+        {% if not reminders %}
             <div class="card-body reminder-card-body border border-secondary text-center">
                 <h3 class="card-title">
-                    No Blood Pressure Readings
+                    No Archived Reminders
                 </h3>
                 <hr>
-                <a href="{% url 'web-bp-create' %}" class="card-text">
-                    Add Blood Pressure Readings!
-                </p>
+                <a href="{% url 'web-reminders' %}" class="card-text">
+                    Head back to the Reminders Page!
+                </a>
             </div>
         {% else %}
         <div class="col-md-9 reminders-page-list">
-        {% for bp in bps %}
+        {% for reminder in reminders %}
             <div class="card mb-3 text-center">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link card-link-button" href="{% url 'web-bp-update' bp.id %}">Update</a>
+                            <a class="nav-link card-link-button" href="{% url 'web-reminder-update' reminder.id %}">Update</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link card-link-button card-link-delete" href="{% url 'web-bp-delete' bp.id %}">Delete</a>
+                            <a class="nav-link card-link-button card-link-delete" href="{% url 'web-reminder-delete' reminder.id %}">Delete</a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body reminder-card-body">
                     <h5 class="card-title">
-                        <a href="{% url 'web-bp-detail' bp.id %}">{{ bp.title }}</a>
+                        <a href="{% url 'web-reminder-detail' reminder.id %}">{{ reminder.title }}</a>
                     </h5>
-                    <hr>
+                    <p class="card-text">{{ reminder.description }}</p>
+                    <hr class="my-4"/>
                     <p class="card-text">
-                        {{ bp.date|date:'d F Y' }} ({{ bp.time|time:'H:i' }})
-                    </p>
-                    <p class="card-text">
-                        Reading : {{ bp.systolic }} / {{ bp.diastolic }}
+                        Time(s): {{ reminder.time_1|time:'H:i' }} 
+                        {% if reminder.time_2 %}
+                        / {{ reminder.time_2|time:'H:i' }}
+                        {% endif %}
+                        {% if reminder.time_3 %}
+                        / {{ reminder.time_3|time:'H:i' }} 
+                        {% endif %}
+                        {% if reminder.time_4 %}
+                        / Time 4: {{ reminder.time_4|time:'H:i' }}
+                        {% endif %}
                     </p>
                 </div>
             </div>

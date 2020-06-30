@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
@@ -22,7 +23,7 @@ def about(request):
 
 @login_required
 def dashboard(request):
-    rem_qs = Reminder.objects.filter(user=request.user).order_by('date_current')[:5]
+    rem_qs = Reminder.objects.filter(user=request.user).exclude(date_end__lt=date.today())[:5]
     bp_qs = BloodPressure.objects.filter(user=request.user)
     context = {'recent_reminders': rem_qs, 'bp_data': bp_qs}
     return render(request, 'app/dashboard.html', context)
@@ -30,13 +31,16 @@ def dashboard(request):
 
 @login_required
 def calendar(request):
-    return render(request, 'app/calendar.html')
+    reminders = Reminder.objects.filter(user=request.user)
+    today = date.today()
+    context = {'user_reminders': reminders, 'today': today}
+    return render(request, 'app/calendar.html', context)
 
 
 #REMINDER VIEWS
 class ReminderListView(LoginRequiredMixin, ListView):
     model = Reminder
-    fields = ['title', 'date_current', 'time_1', 'time_2', 'time_3', 'time_4']
+    fields = ['title', 'date_current', 'date_end', 'time_1', 'time_2', 'time_3', 'time_4']
     template_name = 'app/reminders.html'
     context_object_name = 'reminders'
     paginate_by = 5
@@ -45,9 +49,27 @@ class ReminderListView(LoginRequiredMixin, ListView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    # Get user's list of reminders
+    # Get user's list of reminders which have not expired
     def get_queryset(self):
-        return Reminder.objects.filter(user=self.request.user).order_by('time_1')
+        today = date.today()
+        return Reminder.objects.filter(user=self.request.user).exclude(date_end__lt=date.today())
+
+
+class ReminderArchiveListView(LoginRequiredMixin, ListView):
+    model = Reminder
+    fields = ['title', 'date_current', 'date_end', 'time_1', 'time_2', 'time_3', 'time_4']
+    template_name = 'app/reminders_archive.html'
+    context_object_name = 'reminders'
+    paginate_by = 5
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    # Get user's list of reminders which have expired
+    def get_queryset(self):
+        today = date.today()
+        return Reminder.objects.filter(user=self.request.user).exclude(date_end__gte=date.today())        
 
 
 class ReminderDetailView(LoginRequiredMixin, DetailView):

@@ -31,8 +31,25 @@
                       center: 'title',
                       right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                    weekNumbers: true,
+                    weekNumbers: false,
                     dayMaxEvents: true, // allow "more" link when too many events
+                    events: [
+                        {% for reminder in user_reminders %}
+                        {
+                            title: '{{ reminder.title }}',
+                            start: '{{ reminder.date_current|date:"Y-m-d" }}',
+                            end: '{{ reminder.date_end|date:"Y-m-d" }}',
+                            url: '{% url "web-reminder-detail" reminder.id %}',
+
+                            {% if reminder.date_end < today %}
+                                backgroundColor: 'grey', // expired reminder
+                            {% else %}
+                                backgroundColor: 'blue', // ongoing reminder
+                            {% endif %}
+                        },
+                        {% endfor %}
+                    ],
+
                   });
 
                   calendar.render();

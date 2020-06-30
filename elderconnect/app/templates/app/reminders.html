@@ -11,6 +11,8 @@
                 <a class="list-group-item" href="{% url 'calendar' %}">Calendar</a>
                 <a class="list-group-item active" href="{% url 'web-reminders' %}">Reminders</a>
                 <a class="list-group-item" href="{% url 'web-bp' %}">Blood Pressure Records</a>
+                <hr>
+                <a class="list-group-item" href="{% url 'web-reminders-archive' %}">Reminders Archive</a>
             </ul>
         </div>
 
@@ -20,9 +22,9 @@
                     No Reminders
                 </h3>
                 <hr>
-                <p class="card-text">
-                    Add reminders with the "New Reminder" button!
-                </p>
+                <a href="{% url 'web-reminder-create' %}" class="card-text">
+                    Add Reminders!
+                </a>
             </div>
         {% else %}
         <div class="col-md-9 reminders-page-list">

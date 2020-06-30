@@ -8,6 +8,7 @@ urlpatterns = [
     path('calendar/', views.calendar, name='calendar'),
 
     path('reminders/', views.ReminderListView.as_view(), name='web-reminders'),
+    path('reminders/archive/', views.ReminderArchiveListView.as_view(), name='web-reminders-archive'),
     path('reminders/<int:pk>/', views.ReminderDetailView.as_view(), name='web-reminder-detail'),
     path('reminders/new/', views.ReminderCreateView.as_view(), name='web-reminder-create'),
     path('reminders/<int:pk>/update/', views.ReminderUpdateView.as_view(), name='web-reminder-update'),

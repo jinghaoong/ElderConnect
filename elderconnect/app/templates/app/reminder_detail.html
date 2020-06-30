@@ -7,6 +7,9 @@
             <div class="card-body">
                 <h3 class="card-title">{{ object.title}}</h3>
                 <p class="card-text">{{ object.description }}</p>
+                <hr>
+                <p class="card-text">Start: {{ object.date_current|date:"d F Y" }}</p>
+                <p class="card-text">End: {{ object.date_end|date:"d F Y" }}</p>
             </div>
             <ul class="list-group list-group-flush reminder-detail-timings">
                 <li class="list-group-item ">{{ object.time_1|time:'H:i' }}</li>
