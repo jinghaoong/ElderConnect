@@ -3,6 +3,7 @@ import 'package:mobile/pages/home.dart';
 import 'package:mobile/pages/login.dart';
 import 'package:mobile/pages/register.dart';
 import 'package:mobile/pages/dashboard.dart';
+import 'package:mobile/pages/reminders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -41,12 +42,13 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.teal,
           fontFamily: 'Montserrat',
         ),
-        initialRoute: '/dashboard',
+        initialRoute: '/home',
         routes: {
           '/home': (context) => Home(),
           '/login': (context) => Login(),
           '/register': (context) => Register(),
           '/dashboard': (context) => Dashboard(),
+          '/reminders': (context) => RemindersPage(),
         },
     );
   }
