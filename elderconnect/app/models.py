@@ -21,8 +21,8 @@ class Reminder(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(Reminder, self).save(*args, **kwargs)
 
         img = Image.open(self.medicine_image.path)
 
