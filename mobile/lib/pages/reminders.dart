@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:mobile/pages/reminder_create.dart';
+import 'package:mobile/pages/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindersPage extends StatefulWidget {
@@ -64,9 +66,9 @@ Future<List<Reminder>> fetchReminders() async {
 
 String timeString(String t1, String t2, String t3, String t4) {
   String times = t1;
-  if (t2 != null) times += '  /  ' + t2;
+  if (t2 != null) times += '  |  ' + t2;
   if (t3 != null) times += '\n' + t3;
-  if (t4 != null) times += '  /  ' + t4;
+  if (t4 != null) times += '  |  ' + t4;
 
   return times;
 }
@@ -95,6 +97,37 @@ class _RemindersPageState extends State<RemindersPage> {
         centerTitle: true,
         backgroundColor: Colors.teal[700],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                  'ElderConnect+',
+                  style: TextStyle(fontSize: 25.0)
+              ),
+              decoration: BoxDecoration(
+                color: Colors.teal[700],
+              ),
+            ),
+            ListTile(
+              title: Text('Dashboard'),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (BuildContext context) => Dashboard()),
+                    (route) => false);
+              },
+            ),
+            ListTile(
+              title: Text('Reminders'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RemindersPage()));
+              },
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: FutureBuilder<List<Reminder>>(
           future: _remindersFuture,
@@ -119,7 +152,7 @@ class _RemindersPageState extends State<RemindersPage> {
                       child: Text(times),
                     ),
                     trailing: Wrap(
-                      children: <Widget> [
+                      children: <Widget>[
                         IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.edit),
@@ -128,7 +161,7 @@ class _RemindersPageState extends State<RemindersPage> {
                           onPressed: () {},
                           icon: Icon(Icons.delete),
                         ),
-                      ]
+                      ],
                     ),
                     children: <Widget>[
                       Image.network(reminder.imgUrl),
@@ -147,7 +180,10 @@ class _RemindersPageState extends State<RemindersPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext context) => ReminderCreate()));
+          },
         child: Icon(Icons.add),
         backgroundColor: Colors.teal[300],
         foregroundColor: Colors.white,

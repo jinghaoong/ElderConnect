@@ -3,6 +3,7 @@ import 'package:mobile/pages/home.dart';
 import 'package:mobile/pages/login.dart';
 import 'package:mobile/pages/register.dart';
 import 'package:mobile/pages/dashboard.dart';
+import 'package:mobile/pages/reminder_create.dart';
 import 'package:mobile/pages/reminders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
           '/register': (context) => Register(),
           '/dashboard': (context) => Dashboard(),
           '/reminders': (context) => RemindersPage(),
+          '/reminders/create': (context) => ReminderCreate(),
         },
     );
   }

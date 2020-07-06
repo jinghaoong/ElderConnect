@@ -33,10 +33,19 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             ListTile(
+              title: Text('Dashboard'),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (BuildContext context) => Dashboard()),
+                        (route) => false);
+              },
+            ),
+            ListTile(
               title: Text('Reminders'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RemindersPage()));
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (BuildContext context) => RemindersPage()),
+                        (route) => false);
               },
             ),
           ],
