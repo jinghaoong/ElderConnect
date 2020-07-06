@@ -92,8 +92,7 @@ class ReminderCreateView(LoginRequiredMixin, CreateView):
 
 class ReminderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Reminder
-    fields = ['title', 'date_current', 'date_end', 'time_1', 'time_2', 'time_3', 'time_4',
-                 'medicine_image']
+    fields = ['title', 'description', 'date_current', 'date_end', 'time_1', 'time_2', 'time_3', 'time_4', 'medicine_image']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
