@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:mobile/pages/home.dart';
 import 'package:mobile/pages/login.dart';
 import 'package:mobile/pages/register.dart';
 import 'package:mobile/pages/dashboard.dart';
 import 'package:mobile/pages/reminder_create.dart';
 import 'package:mobile/pages/reminders.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile/pages/reminders_archive.dart';
+import 'package:mobile/pages/blood_pressure.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,8 +52,12 @@ class _MyAppState extends State<MyApp> {
           '/login': (context) => Login(),
           '/register': (context) => Register(),
           '/dashboard': (context) => Dashboard(),
+
           '/reminders': (context) => RemindersPage(),
+          '/reminders-archive': (context) => RemindersArchive(),
           '/reminders/create': (context) => ReminderCreate(),
+
+          '/bloodpressure': (context) => BloodPressurePage(),
         },
     );
   }

@@ -3,57 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/pages/reminders.dart';
 import 'package:mobile/pages/reminder_detail.dart';
-import 'package:mobile/pages/reminders_archive.dart';
-import 'package:mobile/pages/dashboard.dart';
-import 'package:mobile/pages/reminder_create.dart';
 import 'package:mobile/pages/reminder_edit.dart';
 
-import 'package:mobile/widgets/sidebar_drawer.dart';
-
-class RemindersPage extends StatefulWidget {
+class RemindersArchive extends StatefulWidget {
   @override
-  _RemindersPageState createState() => _RemindersPageState();
-}
-
-class Reminder {
-  final int pk;
-  final String title;
-  final String description;
-  final String currentDate;
-  final String endDate;
-  final String time1;
-  final String time2;
-  final String time3;
-  final String time4;
-  final String imgUrl;
-
-  Reminder({
-    this.pk, this.title, this.description, this.currentDate, this.endDate,
-    this.time1, this.time2, this.time3, this.time4, this.imgUrl
-  });
-
-  factory Reminder.fromJson(Map<String, dynamic> json) {
-    return Reminder(
-      pk: json['id'],
-      title: json['title'],
-      description: json['description'],
-      currentDate: json['date_current'],
-      endDate: json['date_end'],
-      time1: json['time_1'],
-      time2: json['time_2'],
-      time3: json['time_3'],
-      time4: json['time_4'],
-      imgUrl: json['medicine_image'],
-    );
-  }
+  _RemindersArchiveState createState() => _RemindersArchiveState();
 }
 
 Future<List<Reminder>> fetchReminders() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.get("token");
   var jsonData;
-  var url = 'http://127.0.0.1:8000/api/api_reminders/';
+  var url = 'http://127.0.0.1:8000/api/api_reminders_archive/';
   var response = await http.get(
       url,
       headers: {"Authorization": "Token " + token,}
@@ -65,21 +28,11 @@ Future<List<Reminder>> fetchReminders() async {
         .toList();
   }
   else {
-    throw Exception("Unable to retrieve Reminders");
+    throw Exception("Unable to retrieve Archived Reminders");
   }
 }
 
-String timeString(String t1, String t2, String t3, String t4) {
-  String times = t1;
-  if (t2 != null) times += '  |  ' + t2;
-  if (t3 != null) times += '\n' + t3;
-  if (t4 != null) times += '  |  ' + t4;
-
-  return times;
-}
-
-class _RemindersPageState extends State<RemindersPage> {
-
+class _RemindersArchiveState extends State<RemindersArchive> {
   Future<List<Reminder>> _remindersFuture;
   bool _isLoading = false;
 
@@ -100,7 +53,7 @@ class _RemindersPageState extends State<RemindersPage> {
                 (route) => false);
       });
     } else {
-      throw Exception("Deletion failed");
+      print(response.body);
     }
   }
 
@@ -114,26 +67,10 @@ class _RemindersPageState extends State<RemindersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            'Reminders',
-            style: TextStyle(fontSize: 25.0)
-        ),
+        title: Text('Archived Reminders'),
         centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RemindersArchive())
-              );
-            },
-            icon: Icon(Icons.archive),
-          ),
-        ],
-        backgroundColor: Colors.teal[700],
+        backgroundColor: Colors.grey[700],
       ),
-      drawer: SidebarDrawer(),
       body: Center(
         child: FutureBuilder<List<Reminder>>(
             future: _remindersFuture,
@@ -158,7 +95,7 @@ class _RemindersPageState extends State<RemindersPage> {
                           );
                         },
                         title: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                               reminder.title,
                               style: TextStyle(
@@ -167,10 +104,10 @@ class _RemindersPageState extends State<RemindersPage> {
                           ),
                         ),
                         subtitle: Padding(
-                          padding: EdgeInsets.fromLTRB(8.0, 0, 0, 8.0),
+                          padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 8.0),
                           child: Text(
                             times,
-                            style: TextStyle(color: Colors.teal[200]),
+                            style: TextStyle(color: Colors.grey[400]),
                           ),
                         ),
                         trailing: Wrap(
@@ -189,7 +126,7 @@ class _RemindersPageState extends State<RemindersPage> {
                             IconButton(
                               onPressed: () {
                                 final confirmDelete = SnackBar(
-                                  backgroundColor: Colors.teal[700],
+                                  backgroundColor: Colors.grey[700],
                                   behavior: SnackBarBehavior.floating,
                                   content: Text(
                                     "Confirm deletion?",
@@ -223,16 +160,6 @@ class _RemindersPageState extends State<RemindersPage> {
             }
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context) => ReminderCreate()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.teal[300],
-        foregroundColor: Colors.white,
-      ),
     );
   }
 }
-

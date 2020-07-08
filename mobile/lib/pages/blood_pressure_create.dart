@@ -2,43 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mobile/pages/reminders.dart';
+import 'package:mobile/pages/blood_pressure.dart';
 
-class ReminderCreate extends StatefulWidget {
+class BloodPressureCreate extends StatefulWidget {
   @override
-  _ReminderCreateState createState() => _ReminderCreateState();
+  _BloodPressureCreateState createState() => _BloodPressureCreateState();
 }
 
-class _ReminderCreateState extends State<ReminderCreate> {
-
+class _BloodPressureCreateState extends State<BloodPressureCreate> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   TextEditingController titleController = TextEditingController();
-  TextEditingController descController = TextEditingController();
-  TextEditingController currDateController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-  TextEditingController timeFirstController = TextEditingController();
-  TextEditingController timeSecondController = TextEditingController();
-  TextEditingController timeThirdController = TextEditingController();
-  TextEditingController timeFourthController = TextEditingController();
+  TextEditingController commentsController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController systolicController = TextEditingController();
+  TextEditingController diastolicController = TextEditingController();
 
-  _create(String title, desc, currDate, endDate, t1, t2, t3, t4) async {
+  _create(String title, comments, date, time, systolic, diastolic) async {
     Map data = {
       'title': title,
-      'description': desc,
-      'date_current': currDate,
-      'date_end': endDate,
-      'time_1': t1,
-      'time_2': t2,
-      'time_3': t3,
-      'time_4': t4,
+      'comments': comments,
+      'date': date,
+      'time': time,
+      'systolic': systolic,
+      'diastolic': diastolic,
     };
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
-    var response = await http.post('http://127.0.0.1:8000/api/api_reminders/',
+    var response = await http.post('http://127.0.0.1:8000/api/api_bp/',
         body: data,
         headers: {"Authorization": "Token " + token});
 
@@ -46,11 +41,11 @@ class _ReminderCreateState extends State<ReminderCreate> {
       setState(() {
         _isLoading = false;
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => RemindersPage()),
+            MaterialPageRoute(builder: (BuildContext context) => BloodPressurePage()),
                 (route) => false);
       });
     } else {
-      throw Exception("Failed to create new Reminder");
+      throw Exception("Failed to create new Blood Pressure record");
     }
   }
 
@@ -63,7 +58,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 controller: titleController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.title),
-                    hintText: 'Reminder Title',
+                    hintText: 'Title',
                     border: OutlineInputBorder(
                         borderSide: BorderSide()
                     ),
@@ -80,11 +75,11 @@ class _ReminderCreateState extends State<ReminderCreate> {
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                maxLines: 3,
-                controller: descController,
+                maxLines: 2,
+                controller: commentsController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.text_fields),
-                    hintText: 'Description',
+                    hintText: 'Comments',
                     border: OutlineInputBorder(
                         borderSide: BorderSide()
                     ),
@@ -94,17 +89,31 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter a short description';
+                    return 'Please enter some comments';
                   }
                   return null;
                 }
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: currDateController,
+                controller: dateController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.date_range),
-                    hintText: 'Current Date [YYYY-MM-DD]',
+                    hintText: 'Date [YYYY-MM-DD]',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide()
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey[100])
+                    )
+                ),
+            ),
+            SizedBox(height: 8.0),
+            TextFormField(
+                controller: timeController,
+                decoration: InputDecoration(
+                    icon: Icon(Icons.timer),
+                    hintText: 'Time [hh:mm]',
                     border: OutlineInputBorder(
                         borderSide: BorderSide()
                     ),
@@ -114,17 +123,17 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter the current date';
+                    return 'Please enter a time';
                   }
                   return null;
                 }
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: endDateController,
+                controller: systolicController,
                 decoration: InputDecoration(
-                    icon: Icon(Icons.date_range),
-                    hintText: 'End Date [YYYY-MM-DD]',
+                    icon: Icon(Icons.favorite),
+                    hintText: 'Systolic Reading',
                     border: OutlineInputBorder(
                         borderSide: BorderSide()
                     ),
@@ -134,41 +143,30 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter the end date';
+                    return 'Please enter the systolic value';
                   }
                   return null;
                 }
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: timeFirstController,
+                controller: diastolicController,
                 decoration: InputDecoration(
-                  hintText: 'Time 1 [hh:mm]',
+                    icon: Icon(Icons.favorite_border),
+                    hintText: 'Diastolic Reading',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide()
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey[100])
+                    )
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter reminder time';
+                    return 'Please enter the diastolic value';
                   }
                   return null;
                 }
-            ),
-            TextFormField(
-              controller: timeSecondController,
-              decoration: InputDecoration(
-                hintText: 'Time 2 [hh:mm]',
-              ),
-            ),
-            TextFormField(
-              controller: timeSecondController,
-              decoration: InputDecoration(
-                hintText: 'Time 3 [hh:mm]',
-              ),
-            ),
-            TextFormField(
-              controller: timeSecondController,
-              decoration: InputDecoration(
-                hintText: 'Time 4 [hh:mm]',
-              ),
             ),
             SizedBox(height: 15.0),
             ButtonTheme(
@@ -182,18 +180,16 @@ class _ReminderCreateState extends State<ReminderCreate> {
                   if (_formKey.currentState.validate()) {
                     _create(
                       titleController.text,
-                      descController.text,
-                      currDateController.text,
-                      endDateController.text,
-                      timeFirstController.text,
-                      timeSecondController.text,
-                      timeThirdController.text,
-                      timeFourthController.text,
+                      commentsController.text,
+                      dateController.text,
+                      timeController.text,
+                      systolicController.text,
+                      diastolicController.text,
                     );
                   }
                 },
                 child: Text('Save'),
-                color: Colors.teal[600],
+                color: Colors.deepOrange[600],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
@@ -210,10 +206,11 @@ class _ReminderCreateState extends State<ReminderCreate> {
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
-            child: ListView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'New Reminder',
+                    'New Reading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -230,7 +227,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back),
-        backgroundColor: Colors.teal[300],
+        backgroundColor: Colors.deepOrange[500],
         foregroundColor: Colors.white,
       ),
     );

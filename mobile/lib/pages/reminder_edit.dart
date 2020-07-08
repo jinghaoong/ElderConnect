@@ -4,26 +4,46 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile/pages/reminders.dart';
 
-class ReminderCreate extends StatefulWidget {
+class ReminderEdit extends StatefulWidget {
+  final Reminder reminder;
+
+  ReminderEdit({Key key, @required this.reminder}) : super(key: key);
+
   @override
-  _ReminderCreateState createState() => _ReminderCreateState();
+  _ReminderEditState createState() => _ReminderEditState(reminder);
 }
 
-class _ReminderCreateState extends State<ReminderCreate> {
+class _ReminderEditState extends State<ReminderEdit> {
+  Reminder reminder;
+
+  _ReminderEditState(this.reminder); // Constructor
 
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descController = TextEditingController();
-  TextEditingController currDateController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-  TextEditingController timeFirstController = TextEditingController();
-  TextEditingController timeSecondController = TextEditingController();
-  TextEditingController timeThirdController = TextEditingController();
-  TextEditingController timeFourthController = TextEditingController();
+  TextEditingController _titleController;
+  TextEditingController _descController;
+  TextEditingController _currDateController;
+  TextEditingController _endDateController;
+  TextEditingController _timeFirstController;
+  TextEditingController _timeSecondController;
+  TextEditingController _timeThirdController;
+  TextEditingController _timeFourthController;
 
-  _create(String title, desc, currDate, endDate, t1, t2, t3, t4) async {
+  @override
+  void initState() {
+    _titleController = TextEditingController(text: reminder.title);
+    _descController = TextEditingController(text: reminder.description);
+    _currDateController = TextEditingController(text: reminder.currentDate);
+    _endDateController = TextEditingController(text: reminder.endDate);
+    _timeFirstController = TextEditingController(text: reminder.time1);
+    _timeSecondController = TextEditingController(text: reminder.time2);
+    _timeThirdController = TextEditingController(text: reminder.time3);
+    _timeFourthController = TextEditingController(text: reminder.time4);
+    super.initState();
+  }
+
+  _edit(String title, desc, currDate, endDate, t1, t2, t3, t4) async {
     Map data = {
       'title': title,
       'description': desc,
@@ -38,11 +58,13 @@ class _ReminderCreateState extends State<ReminderCreate> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
-    var response = await http.post('http://127.0.0.1:8000/api/api_reminders/',
+    var response = await http.put(
+        'http://127.0.0.1:8000/api/api_reminders/${reminder.pk}/',
         body: data,
-        headers: {"Authorization": "Token " + token});
+        headers: {"Authorization": "Token " + token}
+    );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       setState(() {
         _isLoading = false;
         Navigator.of(context).pushAndRemoveUntil(
@@ -50,17 +72,17 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 (route) => false);
       });
     } else {
-      throw Exception("Failed to create new Reminder");
+      throw Exception("Failed to save Reminder");
     }
   }
 
-  Widget _createForm() {
+  Widget _editForm() {
     return Form(
       key: _formKey,
       child: Column(
           children: <Widget>[
             TextFormField(
-                controller: titleController,
+                controller: _titleController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.title),
                     hintText: 'Reminder Title',
@@ -81,7 +103,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
             SizedBox(height: 8.0),
             TextFormField(
                 maxLines: 3,
-                controller: descController,
+                controller: _descController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.text_fields),
                     hintText: 'Description',
@@ -101,7 +123,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: currDateController,
+                controller: _currDateController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.date_range),
                     hintText: 'Current Date [YYYY-MM-DD]',
@@ -121,7 +143,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: endDateController,
+                controller: _endDateController,
                 decoration: InputDecoration(
                     icon: Icon(Icons.date_range),
                     hintText: 'End Date [YYYY-MM-DD]',
@@ -141,7 +163,7 @@ class _ReminderCreateState extends State<ReminderCreate> {
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: timeFirstController,
+                controller: _timeFirstController,
                 decoration: InputDecoration(
                   hintText: 'Time 1 [hh:mm]',
                 ),
@@ -153,19 +175,19 @@ class _ReminderCreateState extends State<ReminderCreate> {
                 }
             ),
             TextFormField(
-              controller: timeSecondController,
+              controller: _timeSecondController,
               decoration: InputDecoration(
                 hintText: 'Time 2 [hh:mm]',
               ),
             ),
             TextFormField(
-              controller: timeSecondController,
+              controller: _timeThirdController,
               decoration: InputDecoration(
                 hintText: 'Time 3 [hh:mm]',
               ),
             ),
             TextFormField(
-              controller: timeSecondController,
+              controller: _timeFourthController,
               decoration: InputDecoration(
                 hintText: 'Time 4 [hh:mm]',
               ),
@@ -180,19 +202,19 @@ class _ReminderCreateState extends State<ReminderCreate> {
                   });
 
                   if (_formKey.currentState.validate()) {
-                    _create(
-                      titleController.text,
-                      descController.text,
-                      currDateController.text,
-                      endDateController.text,
-                      timeFirstController.text,
-                      timeSecondController.text,
-                      timeThirdController.text,
-                      timeFourthController.text,
+                    _edit(
+                      _titleController.text,
+                      _descController.text,
+                      _currDateController.text,
+                      _endDateController.text,
+                      _timeFirstController.text,
+                      _timeSecondController.text,
+                      _timeThirdController.text,
+                      _timeFourthController.text,
                     );
                   }
                 },
-                child: Text('Save'),
+                child: Text('Update'),
                 color: Colors.teal[600],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -213,14 +235,14 @@ class _ReminderCreateState extends State<ReminderCreate> {
             child: ListView(
               children: <Widget>[
                 Text(
-                    'New Reminder',
+                    'Edit Reminder',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
                     )
                 ),
                 SizedBox(height: 50.0),
-                _createForm(),
+                _editForm(),
               ],
             )
         ),
