@@ -1,6 +1,6 @@
-# mobile
+# ElderConnect+
 
-A new Flutter project.
+Mobile Application complementing the ElderConnect Web Application
 
 ## Getting Started
 
