@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/pages/blood_pressure_create.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile/pages/home.dart';
@@ -63,6 +64,7 @@ class _MyAppState extends State<MyApp> {
           '/reminders/create': (context) => ReminderCreate(),
 
           '/bloodpressure': (context) => BloodPressurePage(),
+          '/bloodpressure/create': (context) => BloodPressureCreate(),
         },
     );
   }

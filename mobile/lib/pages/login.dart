@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
+
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -133,28 +133,23 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                    'ElderConnect+',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                    )
-                ),
+                Text('ElderConnect+', style: TextStyle(fontSize: 40.0)),
                 SizedBox(height: 50.0),
                 _loginForm(),
-
               ],
             )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: showFab ? FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => Home()),
@@ -162,7 +157,7 @@ class _LoginState extends State<Login> {
         },
         child: Icon(Icons.home, color: Colors.white),
         backgroundColor: Colors.teal[600],
-      ),
+      ) : null,
     );
   }
 }

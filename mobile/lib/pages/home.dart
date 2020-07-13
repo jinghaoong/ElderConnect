@@ -11,20 +11,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ElderConnect+', style: TextStyle(fontSize: 25.0)),
-        backgroundColor: Colors.teal[800],
-        elevation: 20.0,
-      ),
       body: Container(
         padding: EdgeInsets.all(25.0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Text('ElderConnect+', style: TextStyle(fontSize: 40.0)),
+                SizedBox(height: 25.0),
                 ButtonTheme(
                   height: 50.0,
-                  minWidth: 200.0,
+                  minWidth: 175.0,
                   child: RaisedButton(
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
@@ -38,7 +35,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 SizedBox(height: 10.0),
                 ButtonTheme(
                   height: 50.0,
-                  minWidth: 200.0,
+                  minWidth: 175.0,
                   child: RaisedButton(
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(

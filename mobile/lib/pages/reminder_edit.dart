@@ -230,6 +230,7 @@ class _ReminderEditState extends State<ReminderEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(25.0),
@@ -249,14 +250,14 @@ class _ReminderEditState extends State<ReminderEdit> {
             )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: showFab ? FloatingActionButton(
         onPressed: () {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back),
         backgroundColor: Colors.teal[300],
         foregroundColor: Colors.white,
-      ),
+      ) : null,
     );
   }
 }

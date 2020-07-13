@@ -225,12 +225,14 @@ class _BloodPressureEditState extends State<BloodPressureEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
             child: ListView(
               children: <Widget>[
+                SizedBox(height: 50.0),
                 Text(
                     'New Reading',
                     textAlign: TextAlign.center,
@@ -244,14 +246,14 @@ class _BloodPressureEditState extends State<BloodPressureEdit> {
             )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: showFab ? FloatingActionButton(
         onPressed: () {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back),
         backgroundColor: Colors.deepOrange[500],
         foregroundColor: Colors.white,
-      ),
+      ) : null,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,6 +82,8 @@ String timeString(String t1, String t2, String t3, String t4) {
 
 class _RemindersPageState extends State<RemindersPage> {
 
+  ScrollController controller;
+  bool showFab = true;
   Future<List<Reminder>> _remindersFuture;
   bool _isLoading = false;
 
@@ -110,6 +113,12 @@ class _RemindersPageState extends State<RemindersPage> {
   void initState() {
     super.initState();
     _remindersFuture = fetchReminders();
+    controller = ScrollController();
+    controller.addListener(() {
+      setState(() {
+        showFab = controller.position.userScrollDirection == ScrollDirection.forward;
+      });
+    });
   }
 
   @override
@@ -142,6 +151,7 @@ class _RemindersPageState extends State<RemindersPage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
+                    controller: controller,
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       Reminder reminder = snapshot.data[index];
@@ -226,14 +236,18 @@ class _RemindersPageState extends State<RemindersPage> {
             }
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context) => ReminderCreate()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.teal[300],
-        foregroundColor: Colors.white,
+      floatingActionButton: AnimatedOpacity(
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (BuildContext context) => ReminderCreate()));
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.teal[300],
+          foregroundColor: Colors.white,
+        ),
+        duration: Duration(milliseconds: 400),
+        opacity: showFab ? 1 : 0,
       ),
     );
   }

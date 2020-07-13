@@ -173,13 +173,15 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
               children: <Widget>[
+                SizedBox(height: 75.0),
                 Text(
                     'Registration',
                     textAlign: TextAlign.center,
@@ -193,7 +195,7 @@ class _RegisterState extends State<Register> {
             )
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: showFab ? FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => Home()),
@@ -201,7 +203,7 @@ class _RegisterState extends State<Register> {
         },
         child: Icon(Icons.home, color: Colors.white),
         backgroundColor: Colors.teal[600],
-      ),
+      ) : null,
     );
   }
 }
