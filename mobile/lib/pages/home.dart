@@ -12,7 +12,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ElderConnect+'),
+        title: Text('ElderConnect+', style: TextStyle(fontSize: 25.0)),
         backgroundColor: Colors.teal[800],
         elevation: 20.0,
       ),

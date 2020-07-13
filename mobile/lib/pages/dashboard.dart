@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
           LogoutButton(),
         ],
       ),
-      drawer: SidebarDrawer(),
+      drawer: SidebarDrawer(isTeal: true),
     );
   }
 }

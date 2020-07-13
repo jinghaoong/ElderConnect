@@ -5,24 +5,31 @@ import 'package:mobile/pages/reminder_edit.dart';
 class ReminderDetail extends StatefulWidget {
   final Reminder reminder;
   final String times;
+  final bool active;
 
-  ReminderDetail({Key key, @required this.reminder, @required this.times}) : super(key: key);
+  ReminderDetail(
+      {Key key,
+        @required this.reminder,
+        @required this.times,
+        @required this.active}
+      ) : super(key: key);
 
   @override
-  _ReminderDetailState createState() => _ReminderDetailState(reminder, times);
+  _ReminderDetailState createState() => _ReminderDetailState(reminder, times, active);
 }
 
 class _ReminderDetailState extends State<ReminderDetail> {
   final Reminder reminder;
   final String times;
+  final bool active;
 
-  _ReminderDetailState(this.reminder, this.times);
+  _ReminderDetailState(this.reminder, this.times, this.active);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.teal[800],
+        color: active ? Colors.teal[800] : Colors.grey[800],
         child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +96,7 @@ class _ReminderDetailState extends State<ReminderDetail> {
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back),
-        backgroundColor: Colors.teal[300],
+        backgroundColor: active ? Colors.teal[300] : Colors.grey[500],
         foregroundColor: Colors.white,
       ),
     );

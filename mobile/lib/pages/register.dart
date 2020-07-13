@@ -27,7 +27,9 @@ class _RegisterState extends State<Register> {
       'password2': password2,
     };
 
-    var response = await http.post('http://127.0.0.1:8000/rest-auth/registration/', body: data);
+    var host = '10.0.2.2';
+    var url = 'http://$host:8000/rest-auth/registration/';
+    var response = await http.post(url, body: data);
 
     if (response.statusCode == 201) {
       setState(() {
@@ -60,7 +62,7 @@ class _RegisterState extends State<Register> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter your username';
+                    return 'Please enter a username';
                   }
                   return null;
                 }
@@ -101,7 +103,7 @@ class _RegisterState extends State<Register> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter your password';
+                    return 'Please enter a password';
                   }
                   return null;
                 }
@@ -122,7 +124,7 @@ class _RegisterState extends State<Register> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter your password';
+                    return 'Please re-enter your password';
                   }
                   return null;
                 }
@@ -135,12 +137,15 @@ class _RegisterState extends State<Register> {
                   setState(() {
                     _isLoading = true;
                   });
-                  _register(
-                    usernameController.text,
-                    emailController.text,
-                    password1Controller.text,
-                    password2Controller.text
-                  );
+
+                  if (_formKey.currentState.validate()) {
+                    _register(
+                        usernameController.text,
+                        emailController.text,
+                        password1Controller.text,
+                        password2Controller.text
+                    );
+                  }
                 },
                 child: Text('Register'),
                 color: Colors.teal[600],

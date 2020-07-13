@@ -3,8 +3,25 @@ import 'package:mobile/pages/blood_pressure.dart';
 
 import 'package:mobile/pages/dashboard.dart';
 import 'package:mobile/pages/reminders.dart';
+import 'package:mobile/widgets/logout_button.dart';
 
-class SidebarDrawer extends StatelessWidget {
+class SidebarDrawer extends StatefulWidget {
+  final bool isTeal;
+
+  SidebarDrawer({
+    Key key,
+    @required this.isTeal
+  }) : super(key: key);
+
+  @override
+  _SidebarDrawerState createState() => _SidebarDrawerState(isTeal);
+}
+
+class _SidebarDrawerState extends State<SidebarDrawer> {
+  final bool isTeal;
+
+  _SidebarDrawerState(this.isTeal);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -17,7 +34,7 @@ class SidebarDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 25.0)
             ),
             decoration: BoxDecoration(
-              color: Colors.teal[700],
+              color: isTeal ? Colors.teal[700] : Colors.deepOrange[900],
             ),
           ),
           ListTile(

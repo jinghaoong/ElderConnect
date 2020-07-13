@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/reminders.dart';
 
 class ReminderCreate extends StatefulWidget {
@@ -13,6 +17,8 @@ class _ReminderCreateState extends State<ReminderCreate> {
 
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  File _image;
+  final picker = ImagePicker();
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
@@ -22,6 +28,15 @@ class _ReminderCreateState extends State<ReminderCreate> {
   TextEditingController timeSecondController = TextEditingController();
   TextEditingController timeThirdController = TextEditingController();
   TextEditingController timeFourthController = TextEditingController();
+
+
+  _chooseImage() async {
+    final img = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(img.path);
+    });
+  }
 
   _create(String title, desc, currDate, endDate, t1, t2, t3, t4) async {
     Map data = {
@@ -38,9 +53,27 @@ class _ReminderCreateState extends State<ReminderCreate> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
-    var response = await http.post('http://127.0.0.1:8000/api/api_reminders/',
-        body: data,
-        headers: {"Authorization": "Token " + token});
+    var url = 'http://$host:8000/api/api_reminders/';
+    var request = new http.MultipartRequest("POST", Uri.parse(url));
+
+    request.fields['title'] = title;
+    request.fields['description'] = desc;
+    request.fields['date_current'] = currDate;
+    request.fields['date_end'] = endDate;
+    request.fields['time_1'] = t1;
+    request.fields['time_2'] = t2;
+    request.fields['time_3'] = t3;
+    request.fields['time_4'] = t4;
+    request.files.add(
+      new http.MultipartFile.fromBytes(
+          'medicine_image',
+          _image.readAsBytesSync(),
+          filename: _image.path)
+    );
+    request.headers.addAll({"Authorization": "Token " + token});
+
+    var response = await request.send();
+    print(response.statusCode);
 
     if (response.statusCode == 201) {
       setState(() {
@@ -169,6 +202,27 @@ class _ReminderCreateState extends State<ReminderCreate> {
               decoration: InputDecoration(
                 hintText: 'Time 4 [hh:mm]',
               ),
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _image == null ?
+                Text('No image selected') :
+                CircleAvatar(
+                    child: Image.file(_image),
+                    radius: 30.0,
+                ),
+                SizedBox(width: 10.0),
+                FlatButton(
+                  onPressed: () {
+                    _chooseImage();
+                  },
+                  color: Colors.grey[400],
+                  textColor: Colors.black,
+                  child: Text('select image'),
+                ),
+              ],
             ),
             SizedBox(height: 15.0),
             ButtonTheme(

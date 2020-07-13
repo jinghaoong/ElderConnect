@@ -14,6 +14,11 @@ void main() {
   runApp(MyApp());
 }
 
+// development host ip
+var ios = '127.0.0.1';
+var android = '10.0.2.2';
+var host = android;
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();

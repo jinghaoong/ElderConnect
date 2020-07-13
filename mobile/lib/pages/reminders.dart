@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/reminder_detail.dart';
 import 'package:mobile/pages/reminders_archive.dart';
-import 'package:mobile/pages/dashboard.dart';
 import 'package:mobile/pages/reminder_create.dart';
 import 'package:mobile/pages/reminder_edit.dart';
 
@@ -52,8 +52,9 @@ class Reminder {
 Future<List<Reminder>> fetchReminders() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.get("token");
+
   var jsonData;
-  var url = 'http://127.0.0.1:8000/api/api_reminders/';
+  var url = 'http://$host:8000/api/api_reminders/';
   var response = await http.get(
       url,
       headers: {"Authorization": "Token " + token,}
@@ -87,8 +88,9 @@ class _RemindersPageState extends State<RemindersPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get("token");
 
+    var url = 'http://$host:8000/api/api_reminders/$id/';
     var response = await http.delete(
-        'http://127.0.0.1:8000/api/api_reminders/$id/',
+        url,
         headers: {"Authorization": "Token " + token}
     );
 
@@ -133,7 +135,7 @@ class _RemindersPageState extends State<RemindersPage> {
         ],
         backgroundColor: Colors.teal[700],
       ),
-      drawer: SidebarDrawer(),
+      drawer: SidebarDrawer(isTeal: true),
       body: Center(
         child: FutureBuilder<List<Reminder>>(
             future: _remindersFuture,
@@ -152,8 +154,9 @@ class _RemindersPageState extends State<RemindersPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => ReminderDetail(
-                                  reminder: reminder,
-                                  times: times
+                                reminder: reminder,
+                                times: times,
+                                active: true,
                               ))
                           );
                         },

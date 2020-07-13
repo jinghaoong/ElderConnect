@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/blood_pressure.dart';
 
 class BloodPressureCreate extends StatefulWidget {
@@ -33,7 +34,9 @@ class _BloodPressureCreateState extends State<BloodPressureCreate> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
-    var response = await http.post('http://127.0.0.1:8000/api/api_bp/',
+    var url = 'http://$host:8000/api/api_bp/';
+    var response = await http.post(
+        url,
         body: data,
         headers: {"Authorization": "Token " + token});
 
@@ -96,17 +99,17 @@ class _BloodPressureCreateState extends State<BloodPressureCreate> {
             ),
             SizedBox(height: 8.0),
             TextFormField(
-                controller: dateController,
-                decoration: InputDecoration(
-                    icon: Icon(Icons.date_range),
-                    hintText: 'Date [YYYY-MM-DD]',
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide()
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[100])
-                    )
-                ),
+              controller: dateController,
+              decoration: InputDecoration(
+                  icon: Icon(Icons.date_range),
+                  hintText: 'Date [YYYY-MM-DD]',
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide()
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[100])
+                  )
+              ),
             ),
             SizedBox(height: 8.0),
             TextFormField(
@@ -206,20 +209,19 @@ class _BloodPressureCreateState extends State<BloodPressureCreate> {
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                    'New Reading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                    )
-                ),
-                SizedBox(height: 50.0),
-                _createForm(),
-              ],
-            )
+          child: ListView(
+            children: <Widget>[
+              Text(
+                  'New Reading',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40.0,
+                  )
+              ),
+              SizedBox(height: 50.0),
+              _createForm(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

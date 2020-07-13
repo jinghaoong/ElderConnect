@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/blood_pressure_create.dart';
 import 'package:mobile/pages/blood_pressure_edit.dart';
 
@@ -43,8 +44,9 @@ class BloodPressure {
 Future<List<BloodPressure>> fetchBloodPressure() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.get("token");
+
   var jsonData;
-  var url = 'http://127.0.0.1:8000/api/api_bp/';
+  var url = 'http://$host:8000/api/api_bp/';
   var response = await http.get(
       url,
       headers: {"Authorization": "Token " + token,}
@@ -73,8 +75,9 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get("token");
 
+    var url = 'http://$host:8000/api/api_bp/$id/';
     var response = await http.delete(
-        'http://127.0.0.1:8000/api/api_bp/$id/',
+        url,
         headers: {"Authorization": "Token " + token,}
     );
 
@@ -113,7 +116,7 @@ class _BloodPressurePageState extends State<BloodPressurePage> {
         ],
         backgroundColor: Colors.deepOrange[900],
       ),
-      drawer: SidebarDrawer(),
+      drawer: SidebarDrawer(isTeal: false),
       body: Center(
           child: FutureBuilder<List<BloodPressure>>(
               future: _bloodPressureFuture,

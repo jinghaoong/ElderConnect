@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/reminders.dart';
 
 class ReminderEdit extends StatefulWidget {
@@ -58,8 +59,9 @@ class _ReminderEditState extends State<ReminderEdit> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
+    var url ='http://$host:8000/api/api_reminders/${reminder.pk}/';
     var response = await http.put(
-        'http://127.0.0.1:8000/api/api_reminders/${reminder.pk}/',
+        url,
         body: data,
         headers: {"Authorization": "Token " + token}
     );

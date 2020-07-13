@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mobile/main.dart';
 import 'package:mobile/pages/blood_pressure.dart';
 
 class BloodPressureEdit extends StatefulWidget {
@@ -53,7 +54,9 @@ class _BloodPressureEditState extends State<BloodPressureEdit> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.get('token');
 
-    var response = await http.put('http://127.0.0.1:8000/api/api_bp/${bp.pk}/',
+    var url = 'http://$host:8000/api/api_bp/${bp.pk}/';
+    var response = await http.put(
+        url,
         body: data,
         headers: {"Authorization": "Token " + token});
 
@@ -226,8 +229,7 @@ class _BloodPressureEditState extends State<BloodPressureEdit> {
       body: Container(
         padding: EdgeInsets.all(25.0),
         child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
               children: <Widget>[
                 Text(
                     'New Reading',

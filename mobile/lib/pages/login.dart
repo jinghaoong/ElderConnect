@@ -26,9 +26,12 @@ class _LoginState extends State<Login> {
     };
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var jsonData;
-    var response = await http.post('http://127.0.0.1:8000/rest-auth/login/', body: data);
 
+    var host = '10.0.2.2';
+    var url = 'http://$host:8000/rest-auth/login/';
+    var response = await http.post(url, body: data);
+
+    var jsonData;
     if (response.statusCode == 200) {
       jsonData = jsonDecode(response.body);
       setState(() {
@@ -96,7 +99,13 @@ class _LoginState extends State<Login> {
                   setState(() {
                     _isLoading = true;
                   });
-                  _login(usernameController.text, passwordController.text);
+
+                  if (_formKey.currentState.validate()) {
+                    _login(
+                        usernameController.text,
+                        passwordController.text
+                    );
+                  }
                 },
                 child: Text('Login'),
                 color: Colors.teal[600],
