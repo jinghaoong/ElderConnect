@@ -23,7 +23,7 @@ Frontend (Web)
 Frontend (Mobile)
 
 -- Flutter
-consumes - Django REST API endpoints
+- consumes - Django REST API endpoints
 
 
 Features:
