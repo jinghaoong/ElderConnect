@@ -5,6 +5,24 @@ ElderConnect, ElderConnect+
 
 Ong Jing Hao, Low Yu Yang
 
+
+Tech-Stack:
+
+Backend
+-- Django
+-- SQLite
+
+Frontend (Web)
+-- Django Templates
+-- HTML/CSS 
+-- Bootstrap 4
+-- crispyforms
+
+Frontend (Mobile)
+-- Flutter
+consumes - Django REST API endpoints
+
+
 Features:
 1. Reminder System (Push notifications incomplete)
 2. Blood Pressure Records
